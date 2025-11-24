@@ -2,6 +2,7 @@ import argparse
 import requests
 import csv
 import sys
+import geocoder
 
 def flatten_json(y):
     """
@@ -23,6 +24,24 @@ def flatten_json(y):
 
     flatten(y)
     return out
+
+def perform_revgeo_lookup(lat, long, api_key):
+    """
+    Performs a reverse geocoding lookup against the given latitude and longitude. Uses MapQuests Reverse Geocoding API
+
+    Args:
+        lat (float): Latitude
+        long (float): Longitude
+        api_key (str): The API key for MapQuests Reverse Geocoding API.
+    Returns:
+        dict: the JSON response from geocoder as a dictionary. or None on error.
+    """
+    try:
+        response = geocoder.google([{lat}, {long}], method='reverse', key={api_key})
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error looking up {lat}, {long}: {e}", file=sys.stderr)
+        return None
 
 def perform_lookup(ip_address, api_key):
     """
@@ -89,6 +108,7 @@ def main():
                 remaining = total_to_process - (i + 1)
                 print(f"Looking up: {ip}... ({remaining} IPs remaining)")
                 data = perform_lookup(ip, api_key)
+                #data = ""
 
                 if data:
                     # Flatten the nested JSON data
