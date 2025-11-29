@@ -1,1 +1,1 @@
-This one is pretty simple. Get your own API key from https://vpnapi.io/. Just create a free account for 1,000 lookups per day. -i for the input file (1 IPv4 or IPv6 per line) -w for the output file. -a for your API_Key
+This one is pretty simple. Get your own API key from https://vpnapi.io/. Just create a free account for 1,000 lookups per day. -i for the input file (1 IPv4 or IPv6 per line) -w for the output file. -a for your vpnapi.io API_Key. -c for your opencage API key (this script runs a reverse geolocation check via OpenCage on the Lat\Long results from vpnapi.io)
